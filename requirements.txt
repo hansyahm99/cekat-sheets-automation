@@ -1,6 +1,6 @@
-selenium
+selenium>=4.15
 pandas
 numpy
 gspread
 google-auth
-webdriver-manager
+openpyxl
