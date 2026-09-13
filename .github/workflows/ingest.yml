@@ -23,6 +23,21 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Check Chrome availability
+        run: |
+          echo "--- Cari binary Chrome/Chromium ---"
+          which google-chrome || echo "google-chrome: NOT FOUND"
+          which google-chrome-stable || echo "google-chrome-stable: NOT FOUND"
+          which chromium-browser || echo "chromium-browser: NOT FOUND"
+          which chromium || echo "chromium: NOT FOUND"
+          echo "--- Versi Chrome (kalau ada) ---"
+          google-chrome --version 2>/dev/null || google-chrome-stable --version 2>/dev/null || echo "Tidak bisa cek versi Chrome"
+          echo "--- Cari chromedriver ---"
+          which chromedriver || echo "chromedriver: NOT FOUND"
+          chromedriver --version 2>/dev/null || echo "Tidak bisa cek versi chromedriver"
+          echo "--- Cek Selenium Manager cache ---"
+          ls -la ~/.cache/selenium 2>/dev/null || echo "Belum ada cache selenium"
+
       - name: Run ingestion
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
