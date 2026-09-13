@@ -29,6 +29,9 @@ jobs:
         with:
           chrome-version: stable
 
+      - name: Remove pre-installed chromedriver (avoid version mismatch)
+        run: sudo rm -f /usr/bin/chromedriver
+
       - name: Run ingestion
         env:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
