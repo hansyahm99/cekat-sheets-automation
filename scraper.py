@@ -15,8 +15,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-CEKAT_LOGIN_URL = "https://chat.cekat.ai/login"  # TODO: sesuaikan URL login yang sebenarnya
-CEKAT_TRACKER_URL = "https://chat.cekat.ai/crm?board_id=ccad8c00-54e5-4426-856f-f4cc3bb7bd90&view_id=7df785ea-dfb7-40a9-b12a-dab067f18f0d"  # TODO: sesuaikan URL halaman tracker
+CEKAT_LOGIN_URL = "https://chat.cekat.ai/login"
+
+# TODO: isi board_id & view_id untuk ESC dan EHL (URL ESL sudah dari contoh yang diberikan)
+CEKAT_TRACKER_URLS = {
+    "ESL": "https://chat.cekat.ai/crm?board_id=ccad8c00-54e5-4426-856f-f4cc3bb7bd90&view_id=7df785ea-dfb7-40a9-b12a-dab067f18f0d",
+    "ESC": "https://chat.cekat.ai/crm?board_id=3f155efe-39fc-4c71-bdc1-61592194b22c&tab=itemLogs&view_id=f5404f70-6453-466e-8167-f7d2d0a3840c",
+    "EHL": "https://chat.cekat.ai/crm?board_id=9a58f3e8-31f2-4013-bac9-287bd8e1b48f&view_id=a57be714-d90d-4270-be10-1f4e4d0c853d",
+}
 LOGIN_TIMEOUT = 40
 DOWNLOAD_TIMEOUT = 60
 
@@ -65,9 +71,9 @@ def login(driver, username: str, password: str):
     wait.until(EC.url_changes(CEKAT_LOGIN_URL))
 
 
-def click_export(driver):
+def click_export(driver, unit_name: str):
     wait = WebDriverWait(driver, LOGIN_TIMEOUT)
-    driver.get(CEKAT_TRACKER_URL)
+    driver.get(CEKAT_TRACKER_URLS[unit_name])
 
     # TODO: sesuaikan selector tombol Export/Download yang sebenarnya
     export_button = wait.until(
@@ -100,7 +106,7 @@ def download_tracker(username: str, password: str, unit_name: str, download_dir:
     driver = _build_driver(unit_download_dir)
     try:
         login(driver, username, password)
-        click_export(driver)
+        click_export(driver, unit_name)
         filepath = wait_for_download(unit_download_dir)
         return filepath
     finally:
