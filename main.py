@@ -14,10 +14,12 @@ from push_to_sheets import push
 UNITS = ["ESL", "ESC", "EHL"]
 DOWNLOAD_DIR = os.path.join(os.getcwd(), "downloads")
 
+
 def get_credentials(unit: str) -> tuple[str, str]:
     username = os.environ[f"CEKAT_{unit}_USER"]
     password = os.environ[f"CEKAT_{unit}_PASS"]
     return username, password
+
 
 def run():
     any_failed = False
@@ -25,13 +27,12 @@ def run():
     for unit in UNITS:
         print(f"=== Processing unit: {unit} ===")
         try:
-            username, password =get_credentials(unit)
-            filepath = download_tracker(username, password, unit DOWNLOAD_DIR)
-
-            print(f"[{unit}] FILE terdownload: {filepath}")
+            username, password = get_credentials(unit)
+            filepath = download_tracker(username, password, unit, DOWNLOAD_DIR)
+            print(f"[{unit}] File terdownload: {filepath}")
 
             df = transform(filepath)
-            print(f":[{unit}] {len(df)} baris setelah cleaning")
+            print(f"[{unit}] {len(df)} baris setelah cleaning.")
             push(worksheet_name=unit, df=df)
 
         except Exception as e:
@@ -42,6 +43,7 @@ def run():
 
     if any_failed:
         sys.exit(1)
+
 
 if __name__ == "__main__":
     run()
