@@ -15,8 +15,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-CEKAT_LOGIN_URL = "https://app.cekat.ai/login"  # TODO: sesuaikan URL login yang sebenarnya
-CEKAT_TRACKER_URL = "https://app.cekat.ai/tracker"  # TODO: sesuaikan URL halaman tracker
+CEKAT_LOGIN_URL = "https://chat.cekat.ai/login"  # TODO: sesuaikan URL login yang sebenarnya
+CEKAT_TRACKER_URL = "https://chat.cekat.ai/crm?board_id=ccad8c00-54e5-4426-856f-f4cc3bb7bd90&view_id=7df785ea-dfb7-40a9-b12a-dab067f18f0d"  # TODO: sesuaikan URL halaman tracker
 LOGIN_TIMEOUT = 40
 DOWNLOAD_TIMEOUT = 60
 
