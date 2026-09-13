@@ -38,6 +38,10 @@ def _build_driver(download_dir: str):
     options.add_argument("--disable-gpu")
     options.add_experimental_option("prefs", prefs)
 
+    chrome_path = os.environ.get("CHROME_PATH")
+    if chrome_path:
+        options.binary_location = chrome_path
+
     # Selenium 4.6+ Selenium Manager otomatis nyari/nyocokin chromedriver
     # dengan versi Chrome yang terinstall -- gak perlu webdriver-manager lagi.
     driver = webdriver.Chrome(options=options)
