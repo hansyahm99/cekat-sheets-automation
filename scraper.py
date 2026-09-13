@@ -11,11 +11,9 @@ import glob
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
 
 CEKAT_LOGIN_URL = "https://app.cekat.ai/login"  # TODO: sesuaikan URL login yang sebenarnya
 CEKAT_TRACKER_URL = "https://app.cekat.ai/tracker"  # TODO: sesuaikan URL halaman tracker
@@ -37,12 +35,12 @@ def _build_driver(download_dir: str):
         "download.prompt_for_download": False,
         "safebrowsing.enabled": True,
     }
+    options.add_argument("--disable-gpu")
     options.add_experimental_option("prefs", prefs)
 
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()),
-        options=options,
-    )
+    # Selenium 4.6+ Selenium Manager otomatis nyari/nyocokin chromedriver
+    # dengan versi Chrome yang terinstall -- gak perlu webdriver-manager lagi.
+    driver = webdriver.Chrome(options=options)
     return driver
 
 
