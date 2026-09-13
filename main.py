@@ -6,6 +6,7 @@ Orchestrator: loop ESL/ESC/EHL -> login+export -> transform -> push ke tab masin
 import os
 import sys
 import shutil
+import traceback
 
 from scraper import download_tracker
 from transform import transform
@@ -38,6 +39,7 @@ def run():
         except Exception as e:
             any_failed = True
             print(f"[{unit}] GAGAL: {e}")
+            traceback.print_exc()
 
     shutil.rmtree(DOWNLOAD_DIR, ignore_errors=True)
 
