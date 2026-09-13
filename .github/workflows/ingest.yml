@@ -24,10 +24,14 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Install Chrome
+        id: setup-chrome
         uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
 
       - name: Run ingestion
         env:
+          CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
           CEKAT_ESL_USER: ${{ secrets.CEKAT_ESL_USER }}
